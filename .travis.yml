@@ -1,0 +1,10 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t gleydsonjose/docker-tests -f Dockerfile.dev .
+
+# Updated script with required -e CI=true variable and omitting the coverage flag
+script:
+  - docker run -e CI=true gleydsonjose/docker-tests npm run test
