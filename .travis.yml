@@ -7,4 +7,16 @@ before_install:
 
 # Updated script with required -e CI=true variable and omitting the coverage flag
 script:
-  - docker run -e CI=true gleydsonjose/docker-tests npm run test
+  - docker run -e CI=true gleydsonjose/docker-tests npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-north-1"
+  app: "docker-tests"
+  env: "Dockertests-env"
+  bucket_name: "elasticbeanstalk-eu-north-1-246155924995"
+  bucket_path: "docker-tests"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
